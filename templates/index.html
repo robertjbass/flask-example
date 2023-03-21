@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flask App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<script>
+  const postForm = (e) => {
+    console.log("postForm")
+    e.preventDefault();
+    const email = document.querySelector("#email").value
+    const password = document.querySelector("#password").value
+    const formData = {
+      email,
+      password,
+    }
+    console.log({ formData });
+    const response = fetch("/login", { method: "POST", body: formData })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  };
+
+  const clicked = () => console.log("clicked")
+</script>
+
+<body>
+  <section class="p-4 flex">
+
+    <div class="flex flex-col w-1/2 mx-auto">
+      <form onsubmit="postForm" method="POST" action="/login" >
+        <h2 class="text-xl text-center">Login</h2>
+
+        <input
+          class="border-2 border-black rounded-full px-2 w-full h-12 my-1"
+          type="text"
+          placeholder="Email"
+          name="email"
+        />
+
+        <input
+          class="border-2 border-black rounded-full px-2 w-full h-12 my-1"
+          type="password"
+          placeholder="Password"
+          name="password"
+        />
+
+        <button type="submit" class="border-2 border-black rounded-full w-full h-12 flex my-1">
+          <span class="m-auto">
+            Login
+          </span>
+        </button>
+
+      </form>
+
+        {% if access_token %}
+        <h2 class="text-lg">Access Token:</h2>
+        <textarea class="px-4 border-rounded border-2" name="access_token" id="access_token" cols="30" rows="10">
+          {{access_token}}
+        </textarea>
+        {% endif %}
+    </section>
+</body>
+
+</html>
